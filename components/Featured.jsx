@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import styles from "../styles/Featured.module.css";
 
 const Featured = () => {
+  const [index, setIndex] = useState(0);
+
   const images = [
     "/img/featured.png",
     "/img/featured2.png",
@@ -17,7 +19,7 @@ const Featured = () => {
       <div className={styles.wrapper}>
         {images.map((img, i) => (
           <div className={styles.imgContainer} key={i}>
-            <Image src={img} alt="" layout="fill" objectFit="contain" />
+            <Image src={img} alt="" layout="fill" />
           </div>
         ))}
       </div>
