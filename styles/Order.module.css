@@ -13,6 +13,48 @@
   margin-bottom: 50px;
 }
 
+.row:last-child {
+  display: flex;
+  justify-content: space-around;
+}
+
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inProgress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: inProgress 1s ease infinite alternate;
+}
+
+/* keyframe for animation */
+
+@keyframes inProgress {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.undone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.3;
+}
+
+/* if it is undone it will be disable */
+.undone .checkedIcon,
+.inProgress .checkedIcon {
+  display: none;
+}
+
 .right {
   flex: 1;
 }
