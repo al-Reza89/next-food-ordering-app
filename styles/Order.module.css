@@ -7,44 +7,25 @@
   flex: 2;
 }
 
+.table {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
 .right {
   flex: 1;
 }
 
-.imgContainer {
-  width: 100px;
-  height: 100px;
-  position: relative;
-}
-
-.table {
-  width: 100%;
-  text-align: center;
-  border-spacing: 20px;
-}
-
-.name {
-  font-weight: 500;
-  color: #d1422e;
-  font-size: 18px;
-}
-
-.total {
-  font-size: 18px;
-  font-weight: 500;
-}
-
 .wrapper {
   width: 90%;
-  height: 300px;
-  max-height: 400px;
+  max-height: 300px;
   background-color: #333;
-  padding: 50px;
-  padding-top: 10px;
+  color: white;
+  padding: 10px 50px 50px 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: white;
 }
 
 .totalTextTitle {
@@ -52,9 +33,10 @@
 }
 
 .button {
+  background-color: white;
   height: 30px;
-  color: #d1422e;
+  color: teal;
   font-weight: bold;
-  cursor: pointer;
   margin-top: 20px;
+  cursor: not-allowed;
 }
