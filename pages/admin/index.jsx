@@ -7,6 +7,7 @@ const Index = ({ products, orders }) => {
   // if i delete it will delete from mingodb but remain in the web so prevent this use this useState
   const [pizzaList, setPizzaList] = useState(products);
   const [orderList, setOrderList] = useState(orders);
+  const status = ["preparing", "on the way", "delivered"];
 
   const handleDelete = async (id) => {
     try {
@@ -14,6 +15,28 @@ const Index = ({ products, orders }) => {
         "http://localhost:3000/api/products/" + id
       );
       setPizzaList(pizzaList.filter((pizza) => pizza._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleStatus = async (id) => {
+    // find current status and currentStatus+1
+
+    // first find item
+    const item = orderList.filter((order) => order._id === id)[0];
+    const currentStatus = item.status;
+
+    try {
+      const res = await axios.put("http://localhost:3000/api/orders/" + id, {
+        status: currentStatus + 1,
+      });
+      setOrderList([
+        res.data,
+        // previous orderlist delete korbo
+        ...orderList.filter((order) => order._id !== id),
+        // than added new status
+      ]);
     } catch (err) {
       console.log(err);
     }
@@ -85,9 +108,14 @@ const Index = ({ products, orders }) => {
                 <td>
                   {order.method === 0 ? <span>cash</span> : <span>paid</span>}
                 </td>
-                <td>Preparing</td>
+                <td>{status[order.status]}</td>
                 <td>
-                  <button className={styles.button}>Next Stage</button>
+                  <button
+                    onClick={() => handleStatus(order._id)}
+                    className={styles.button}
+                  >
+                    Next Stage
+                  </button>
                 </td>
               </tr>
             </tbody>
