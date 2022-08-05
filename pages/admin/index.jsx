@@ -76,18 +76,22 @@ const Index = ({ products, orders }) => {
               <th>Action</th>
             </tr>
           </tbody>
-          <tbody>
-            <tr className={styles.trTitle}>
-              <td>548943574389579845</td>
-              <td> Jhon</td>
-              <td>$100</td>
-              <td>paid</td>
-              <td>Preparing</td>
-              <td>
-                <button className={styles.button}>Next Stage</button>
-              </td>
-            </tr>
-          </tbody>
+          {orderList.map((order) => (
+            <tbody key={order._id}>
+              <tr className={styles.trTitle}>
+                <td>{order._id.slice(0, 9)}...</td>
+                <td> {order.customer}</td>
+                <td>${order.total}</td>
+                <td>
+                  {order.method === 0 ? <span>cash</span> : <span>paid</span>}
+                </td>
+                <td>Preparing</td>
+                <td>
+                  <button className={styles.button}>Next Stage</button>
+                </td>
+              </tr>
+            </tbody>
+          ))}
         </table>
       </div>
     </div>
