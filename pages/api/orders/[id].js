@@ -1,7 +1,7 @@
 //  it works like express server
 
+import Order from "../../../models/Order";
 import dbConnect from "../../../util/mongo";
-import Product from "../../../models/Product";
 
 export default async function handler(req, res) {
   const {
@@ -9,7 +9,15 @@ export default async function handler(req, res) {
     query: { id },
   } = req;
 
+  await dbConnect();
+
   if (method === "GET") {
+    try {
+      const order = await Order.findById(id);
+      res.status(200).json(order);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   }
   if (method === "PUT") {
   }
