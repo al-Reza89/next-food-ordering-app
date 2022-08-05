@@ -138,6 +138,7 @@ const Cart = () => {
               "client-id": "test",
               components: "buttons",
               currency: "USD",
+              "disable-funding": "credit,card,p24,venmo",
             }}
           >
             <ButtonWrapper currency={currency} showSpinner={false} />
