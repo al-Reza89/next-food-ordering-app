@@ -8,15 +8,34 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { reset } from "../redux/cartSlice";
 
 const Cart = () => {
-  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
-  const amount = "2";
+  // ei poriman amount kaita nibe
+  const amount = cart.total;
   const currency = "USD";
   const style = { layout: "vertical" };
+
+  const createOrder = async (data) => {
+    try {
+      // send user data to backend
+      const res = await axios.post("http://localhost:3000/api/orders", data);
+
+      // router for push customer to another page after successful operation
+
+      res.status === 201 && router.push("/orders/" + res.data._id);
+      dispatch(reset());
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const ButtonWrapper = ({ currency, showSpinner }) => {
     // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
@@ -59,8 +78,19 @@ const Cart = () => {
               });
           }}
           onApprove={function (data, actions) {
-            return actions.order.capture().then(function () {
+            return actions.order.capture().then(function (details) {
               // Your code here after capture the order
+              // console.log(details);
+              // use this details information in order api
+              // create our order
+
+              const shipping = details.purchase_units[0].shipping;
+              createOrder({
+                customer: shipping.name.full_name,
+                address: shipping.address.address_line_1,
+                total: cart.total,
+                method: 1,
+              });
             });
           }}
         />
@@ -136,9 +166,13 @@ const Cart = () => {
           {open ? (
             <div className={styles.paymentMethods}>
               <button className={styles.payButton}>CASH ON DELIVERY</button>
+              {/* for client id visit https://developer.paypal.com/developer/accounts site */}
+              {/* create e account one for bisness and other for personal(for testing perpose ) */}
+              {/* client id === business id */}
               <PayPalScriptProvider
                 options={{
-                  "client-id": "test",
+                  "client-id":
+                    "AYAMf_BCEHlqDJBIhfN3P1nzP5wXkQgK7DCheL83G-_WMPJJO3mfJ-Hg2zTgRGiUpTwQQz-bd4l0r8m_",
                   components: "buttons",
                   currency: "USD",
                   "disable-funding": "credit,card,p24,venmo",
