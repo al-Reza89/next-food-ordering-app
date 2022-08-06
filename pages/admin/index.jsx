@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../../styles/Admin.module.css";
 import Image from "next/image";
 import axios from "axios";
+// import { redirect } from "next/dist/server/api-utils";
 
 const Index = ({ products, orders }) => {
   // if i delete it will delete from mingodb but remain in the web so prevent this use this useState
@@ -128,7 +129,21 @@ const Index = ({ products, orders }) => {
 
 export default Index;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx) => {
+  // check cookie if it is correct or not
+  // if cookie than access cookie and if there is no cookie just retuen empty string
+  const myCookie = ctx.req?.cookies || "";
+
+  if (myCookie.token !== process.env.TOKEN) {
+    // just retuen to login page
+    //  and did not call this api
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
   const productRes = await axios.get("http://localhost:3000/api/products");
   const orderRes = await axios.get("http://localhost:3000/api/orders");
 
