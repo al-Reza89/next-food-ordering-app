@@ -11,7 +11,8 @@ export default async function handler(req, res) {
 
   // it can be get ,post , delete ....
 
-  const { method } = req;
+  const { method, cookies } = req;
+  const token = cookies.token;
 
   if (method === "GET") {
     try {
@@ -23,6 +24,9 @@ export default async function handler(req, res) {
   }
 
   if (method === "POST") {
+    if (!token || token !== process.env.token) {
+      return res.status(401).json("You are not authenticate");
+    }
     try {
       //  req.body te ja dibo ta Product Scheme e save korbe
 
