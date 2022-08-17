@@ -20,7 +20,9 @@ const Navbar = () => {
       <div className={styles.item}>
         <ul className={styles.list}>
           <Link href="/" passHref>
-            <li className={styles.listItem}>Homepage</li>
+            <a>
+              <li className={styles.listItem}>Homepage</li>
+            </a>
           </Link>
           <li className={styles.listItem}>Products</li>
           <li className={styles.listItem}>Menu</li>
@@ -29,17 +31,22 @@ const Navbar = () => {
           <li className={styles.listItem}>Blog</li>
           <li className={styles.listItem}>Contact</li>
           <Link href="/admin" passHref>
-            <li className={styles.listItem}>Login</li>
+            <a>
+              {" "}
+              <li className={styles.listItem}>Login</li>
+            </a>
           </Link>
         </ul>
       </div>
       <Link href="/cart" passHref>
-        <div className={styles.item}>
-          <div className={styles.cart}>
-            <Image src="/img/cart.png" alt="" width="30px" height="30px" />
-            <div className={styles.counter}>{quantity}</div>
+        <a>
+          <div className={styles.item}>
+            <div className={styles.cart}>
+              <Image src="/img/cart.png" alt="" width="30px" height="30px" />
+              <div className={styles.counter}>{quantity}</div>
+            </div>
           </div>
-        </div>
+        </a>
       </Link>
     </div>
   );
