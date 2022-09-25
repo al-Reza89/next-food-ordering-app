@@ -28,7 +28,10 @@ const Cart = () => {
   const createOrder = async (data) => {
     try {
       // send user data to backend
-      const res = await axios.post("http://localhost:3000/api/orders", data);
+      const res = await axios.post(
+        "https://next-food-ordering-app-wv8l.vercel.app/api/orders",
+        data
+      );
 
       // router for push customer to another page after successful operation
 
